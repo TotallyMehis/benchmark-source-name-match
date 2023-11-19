@@ -1,0 +1,14 @@
+.vscode
+*.exe*
+*.ilk
+*.obj
+*.pdb
+*.vcxproj*
+*.sln
+*.iobj
+*.ipdb
+*.log
+*.tlog
+.vs/
+*.idb
+*.out
