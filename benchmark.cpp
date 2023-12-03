@@ -224,7 +224,7 @@ int main()
 		std::vector<std::chrono::nanoseconds> new_values;
 		std::vector<std::chrono::nanoseconds> new_values_eq;
 		std::vector<std::chrono::nanoseconds> new_values_fixed;
-		std::vector<std::chrono::nanoseconds> ascii_bitshifting;
+		std::vector<std::chrono::nanoseconds> bitwise_values;
 
 		for (int i = 0; i < iterations; i++) {
 			std::vector<const char*> cpy(entity_names.size());
@@ -235,17 +235,17 @@ int main()
 			new_values.push_back(benchmark(entity_names, cpy, match_new));
 			new_values_eq.push_back(benchmark(entity_names, cpy, match_new_eq));
 			new_values_fixed.push_back(benchmark(entity_names, cpy, match_new_fixed));
-			ascii_bitshifting.push_back(benchmark(entity_names, cpy, match_bitwise));
+			bitwise_values.push_back(benchmark(entity_names, cpy, match_bitwise));
 		}
 
 		std::sort(old_values.begin(), old_values.end());
 		std::sort(new_values.begin(), new_values.end());
 		std::sort(new_values_eq.begin(), new_values_eq.end());
 		std::sort(new_values_fixed.begin(), new_values_fixed.end());
-		std::sort(ascii_bitshifting.begin(), ascii_bitshifting.end());
+		std::sort(bitwise_values.begin(), bitwise_values.end());
 
 		auto print_results = [&new_values](const char* name, const std::vector<std::chrono::nanoseconds>& values) {
-			printf("%s %.7lld   %.7lld   %.7lld   %.7lld   %.1lf\n", name, min(values), max(values), median(values), avg(values), sum(values) / (double)sum(new_values) * 100.0);
+			printf("%s%.7lld   %.7lld   %.7lld   %.7lld   %.1lf\n", name, min(values), max(values), median(values), avg(values), sum(values) / (double)sum(new_values) * 100.0);
 		};
 
 		printf("%i^2 string comparisons, %i iterations, in nanoseconds.\n", (int)entity_names.size(), iterations);
@@ -254,7 +254,7 @@ int main()
 		print_results("Eq check + Custom comp\t", new_values_eq);
 		print_results("Custom comparison\t", new_values);
 		print_results("Custom comparison fixed ", new_values_fixed);
-		print_results("Ascii Bitshift comp\t", ascii_bitshifting);
+		print_results("Bitwise comparison\t", bitwise_values);
 	}
 
 	return 0;
